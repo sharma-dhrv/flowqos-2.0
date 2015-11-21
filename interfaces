@@ -1,0 +1,63 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+# Backup your current file at "/etc/network/interfaces" and replace it with this interface file
+auto lo
+iface lo inet loopback
+
+# Comment these two lines if you do not have eth1 interface
+auto eth1
+iface eth1 inet dhcp
+
+#Replace the IP address on third line below with your VM's eth0 interface's IP address
+auto veth0
+iface veth0 inet static
+address 192.168.56.101
+netmask 255.255.255.0
+
+auto ovs-in
+iface ovs-in inet manual
+up ifconfig $IFACE 0.0.0.0 up
+up ip link set $IFACE promisc on
+down ip link set $IFACE promisc off
+down ifconfig $IFACE down
+
+auto br-video
+iface br-video inet manual
+up ifconfig $IFACE 0.0.0.0 up
+up ip link set $IFACE promisc on
+down ip link set $IFACE promisc off
+down ifconfig $IFACE down
+
+auto br-voip
+iface br-voip inet manual
+up ifconfig $IFACE 0.0.0.0 up
+up ip link set $IFACE promisc on
+down ip link set $IFACE promisc off
+down ifconfig $IFACE down
+
+auto br-game
+iface br-game inet manual
+up ifconfig $IFACE 0.0.0.0 up
+up ip link set $IFACE promisc on
+down ip link set $IFACE promisc off
+down ifconfig $IFACE down
+
+auto br-web
+iface br-web inet manual
+up ifconfig $IFACE 0.0.0.0 up
+up ip link set $IFACE promisc on
+down ip link set $IFACE promisc off
+down ifconfig $IFACE down
+
+auto ovs-out
+iface ovs-out inet manual
+up ifconfig $IFACE 0.0.0.0 up
+up ip link set $IFACE promisc on
+down ip link set $IFACE promisc off
+down ifconfig $IFACE down
+
+auto eth0
+iface eth0 inet manual
+up ifconfig $IFACE 0.0.0.0 up
+up ip link set $IFACE promisc on
+down ip link set $IFACE promisc off
+down ifconfig $IFACE down
