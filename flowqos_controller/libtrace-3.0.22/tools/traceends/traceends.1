@@ -1,0 +1,55 @@
+.TH TRACEENDS "1" "September 2011" "traceends (libtrace)" "User Commands"
+.SH NAME
+traceends \- summarise traffic done by every endpoint observed in a trace
+.SH SYNOPSIS
+.B tracetopends
+[ \fB-f \fRbpf | \fB--filter=\fRbpf]
+[ \fB-a \fRaddrtype | \fB--address=\fRaddrtype]
+[ \fB-H | \fB--help]
+
+inputuri [inputuri ...] 
+.SH DESCRIPTION
+traceends reports the number of bytes and packets sent and received by each
+endpoint observed in the input trace(s). Usually, you don't want to run this
+program directly \-\- see \fBtracetopends\fR instead.
+
+.TP
+\fB\-f\fR bpf filter
+output only packets that match tcpdump style bpf filter
+
+.TP
+\fB\-A\fR address type
+Specifies how an endpoint should be defined. Suitable options are "mac", "v4" 
+and "v6" which will report endpoint stats for each observed MAC address, IPv4
+address and IPv6 address respectively.
+
+.SH OUTPUT
+Output is written to stdout in columns separated by blank space. 
+
+The columns are (in order):
+ * Endpoint address
+ * Time last observed
+ * Packets originating from the endpoint
+ * Bytes originating from the endpoint (IP header onwards)
+ * Payload originating from the endpoint (post transport header)
+ * Packets sent to the endpoint
+ * Bytes sent to the endpoint (IP header onwards)
+ * Payload sent to the endpoint (post transport header)
+
+.SH EXAMPLES
+Get stats for each individual MAC address in a trace:
+.nf
+traceends -a mac erf:trace.erf.gz
+.fi
+
+.SH LINKS
+More details about traceends (and libtrace) can be found at
+http://www.wand.net.nz/trac/libtrace/wiki/UserDocumentation
+
+.SH SEE ALSO
+libtrace(3), tracemerge(1), tracefilter(1), traceconvert(1), tracesplit_dir(1),
+tracereport(1), tracertstats(1), tracestats(1), tracepktdump(1), traceanon(1),
+tracesummary(1), tracereplay(1), tracediff(1), tracetopends(1)
+
+.SH AUTHORS
+Shane Alcock <salcock@cs.waikato.ac.nz>

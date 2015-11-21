@@ -1,0 +1,65 @@
+Version 2.0.4
+-------------
+ * Added get_local_ip_str and get_external_ip_str functions to the flowId class
+
+Version 2.0.3
+-------------
+ * Redefined the meanings of "server" and "client" for a given libflowmanager
+   flow. The "server" is now always the recipient of the first packet and the
+   "client" is always the sender of the first packet. This is much more 
+   intuitive than the direction based method of determining who is the server.
+ * Updated get_client and get_server functions in the flowId class to reflect
+   the change in definitions.
+ * Added get_local and get_external functions to the flowId class that will
+   return the "local" or "remote" IP addresses / ports. These functions behave
+   exactly the same as the old get_client and get_server functions did, so if
+   you preferred the old way, you can still use it (just replace get_client
+   with get_local and get_server with get_external).
+ * Fixed bug that was preventing both halves of a bidirectional IPv6 flow from
+   being matched to the same libflowmanager flow.
+ * Added lfm_foreach_flow to the API - this allows users to run a specific 
+   function against every flow currently in the active flow list.
+ * Added lfm_release_flow to the API - this can be used instead of manually 
+   deleting the flow once the user has finished with an expired flow.
+ * Updated examples to cover new API functions.
+
+Version 2.0.2
+-------------
+ * Added a new config option (LFM_OPTION_TCP_ANYSTART) which will enable the
+   creation of TCP flows for non-SYN packets. These new flows will begin with
+   a 120 sec timeout, but will become established if a second packet is
+   observed for the flow.
+ * Improved performance by reducing the number of map lookups per packet.
+ * Client / Server is now determined based on packet direction rather than the
+   return value of trace_get_server_port(). This is a more consistent and 
+   simple approach than before, but may result in a lot of client/server swaps
+   when comparing new results against results generated with an older version
+   of libprotoident.
+ * Flow Id numbers are now 64 bit values.
+ * Fixed bug where get_client_ip() would return an inappropriate value for an
+   IPv6 flow.
+ * Fixed a compilation problem with newer versions of gcc.
+
+Version 2.0.1
+-------------
+
+ * Version only used internally within WAND.
+
+
+Version 2.0.0
+-------------
+ * Added support for IPv6 flows
+ * Slight API change - get_client_ip_str() and get_server_ip_str() functions
+   for the flow ID now take a pointer to a string as a parameter, which is 
+   updated to contain the IP address string. Previously, a static string was
+   created and returned by these functions, which created a "use it or lose 
+   it" scenario.
+ * Fixed bug where a TCP flow was treated as established without seeing a SYN
+   ACK
+ * Fixed bug when the source and destination ports match
+ * Restructured source code directories
+ * Flows in the TCP half-close state now expire after only 4 minutes
+ * UDP flows now expire after 2 minutes rather than 2 mins 20 secs
+ * Added example program that demonstrates how the API should be used
+ * Linking against C++ programs should now work properly.
+ * Fixed bug with the DirectionInfo destructor.

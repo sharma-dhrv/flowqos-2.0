@@ -1,0 +1,88 @@
+.TH TRACETOPENDS "1" "September 2011" "tracetopends (libtrace)" "User Commands"
+.SH NAME
+tracetopends \- reports the endpoints that are responsible for the most traffic
+in a trace
+.SH SYNOPSIS
+.B tracetopends
+[ \fB-f \fRbpf ]
+[ \fB-A \fRaddrtype ]
+[ \fB-s ]
+[ \fB-d ]
+[ \fB-b ]
+[ \fB-a ]
+[ \fB-p ]
+[ \fB-n \fRtopcount ]
+inputuri [inputuri ...] 
+.SH DESCRIPTION
+tracetopends reports the number of bytes and packets sent and received by the
+busiest endpoints observed in the input trace(s). 
+
+.TP
+\fB\-f\fR bpf filter
+Output only packets that match tcpdump style bpf filter.
+
+.TP
+\fB\-n\fR top count
+Report the top N endpoints (defaults to 10).
+
+.TP
+\fB\-A\fR address type
+Specifies how an endpoint should be defined. Suitable options are "mac", "v4" 
+and "v6" which will report endpoint stats for each observed MAC address, IPv4
+address and IPv6 address respectively.
+
+.TP
+\fB\-s
+Sort endpoints based on the amount of outgoing traffic (will cancel any 
+previous \-d option. This is on by default.
+
+.TP
+\fB\-d
+Sort endpoints based on the amount of incoming traffic (will cancel any 
+previous \-s option. 
+
+.TP
+\fB\-b
+Sort endpoints based on the amount of IP traffic (will cancel any previous 
+\-a or \-p options. This is on by default. 
+
+.TP
+\fB\-a
+Sort endpoints based on the amount of application layer traffic (will cancel 
+any previous \-b or \-p options. 
+
+.TP
+\fB\-p
+Sort endpoints based on the amount of packets (will cancel any previous 
+\-b or \-a options. 
+
+.SH OUTPUT
+Output is written to stdout in columns separated by blank space. 
+
+The columns are (in order):
+ * Endpoint address
+ * Time last observed
+ * Packets originating from the endpoint
+ * Bytes originating from the endpoint (IP header onwards)
+ * Payload originating from the endpoint (post transport header)
+ * Packets sent to the endpoint
+ * Bytes sent to the endpoint (IP header onwards)
+ * Payload sent to the endpoint (post transport header)
+
+.SH EXAMPLES
+Find the IPv4 addresses that are sending the most traffic.
+.nf
+tracetopends -A v4 -b -s erf:trace.erf.gz
+.fi
+
+.SH LINKS
+More details about tracetopends (and libtrace) can be found at
+http://www.wand.net.nz/trac/libtrace/wiki/UserDocumentation
+
+.SH SEE ALSO
+libtrace(3), tracemerge(1), tracefilter(1), traceconvert(1), tracesplit_dir(1),
+tracereport(1), tracertstats(1), tracestats(1), tracepktdump(1), traceanon(1),
+tracesummary(1), tracereplay(1), tracediff(1), traceends(1)
+
+.SH AUTHORS
+Shane Alcock <salcock@cs.waikato.ac.nz>

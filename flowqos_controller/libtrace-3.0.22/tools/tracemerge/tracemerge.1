@@ -1,0 +1,70 @@
+.TH TRACEMERGE "1" "March 2006" "tracemerge (libtrace)" "User Commands"
+.SH NAME
+tracemerge \- Merge one (or more) traces together
+.SH SYNOPSIS
+.B tracemerge 
+[ \-i [ interfaces_per_input ] | \-\^\-set-interface [ interfaces_per_input ] ]
+[ \-u | \-\^\-unique-packets ] [ \-z | \-\^\-compress-level <level> ] 
+[ \-Z | \-\^\-compress-type <method> ]
+outputuri inputuri...
+.SH DESCRPTION
+tracemerge merges two or more traces together, keeping packets in order.
+
+.TP
+.PD 0
+.BI \-i [ interfaces_per_input ]
+.TP
+.PD
+.BI \-\^\-set-interface [interfaces_per_input ] 
+set the interface ("direction") for each input to be unique.  The optional
+inputs_per_interface parameter is how many inputs to reserve for each trace,
+and defaults to 1.  Thus if you have two traces with two interfaces (in/out),
+and interfaces_per_input is set to 2, then tracemerge will have the first
+interface of the first input will be 0, the second interface of the first input
+will be 1, the first interface of the second input will be 2, and the second
+interface of the second input will be 3.
+
+Beware that erf only supports 4 interfaces, and pcap only supports 2.
+Limitations apply based on the input trace format (not the output trace format)
+
+.TP
+.PD 0
+.BI \-u
+.TP
+.PD
+.BI \-\^\-unique-packets
+Ignore duplicate packets with identical timestamps.
+
+.TP
+.PD 0
+.BI \-z level
+.TP
+.PD
+.BI \-\^\-compress-level level
+Sets the amount of compression performed on the output file. This value can
+range from 0 (no compression) to 9 (maximum compression). Higher compression
+levels require more CPU to compress data. Defaults to 0.
+
+.TP
+.PD 0
+.BI \-Z method 
+.TP
+.PD
+.BI \-\^\-compress-type method 
+Describes the compression algorithm to be used when writing the output trace.
+Possible methods are "gzip", "bzip2", "lzo", "xz" and "none". Defaults to 
+"none".
+
+
+.SH LINKS
+More details about tracemerge (and libtrace) can be found at
+http://www.wand.net.nz/trac/libtrace/wiki/UserDocumentation
+
+.SH SEE ALSO
+libtrace(3), tracesplit(1), tracesplit_dir(1), tracefilter(1),
+traceconvert(1), tracereport(1), tracertstats(1), tracestats(1), 
+tracepktdump(1), traceanon(1), tracesummary(1), tracereplay(1),
+tracediff(1), traceends(1), tracetopends(1)
+
+.SH AUTHORS
+Perry Lorier <perry@cs.waikato.ac.nz>
