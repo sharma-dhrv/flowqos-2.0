@@ -55,7 +55,7 @@ create_ovs()
         echo "Setting dpid of $1 : $2"
         ovs-vsctl set Bridge $1 other-config:datapath-id=$2
         sleep 1
-        ovs-vsctl set-controller $1 tcp:$CONTROLLER
+        #ovs-vsctl set-controller $1 tcp:$CONTROLLER
     fi
 
     sleep 1

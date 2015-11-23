@@ -1,0 +1,9 @@
+priority=0,in_port=4,actions=output:1
+priority=0,in_port=5,actions=output:1
+priority=0,in_port=6,actions=output:1
+priority=0,in_port=7,actions=output:1
+priority=0,in_port=1,actions=output:6
+priority=42,dl_type=0x0800,in_port=1,nw_proto=6,nw_src=192.168.56.102,nw_dst=192.168.56.101,tcp_src=5001,actions=output:6
+priority=42,dl_type=0x0800,in_port=1,nw_proto=17,nw_src=192.168.56.102,nw_dst=192.168.56.101,tcp_src=5001,actions=output:6
+priority=10,dl_type=0x0800,in_port=1,nw_proto=6,nw_src=192.168.56.102,nw_dst=192.168.56.101,actions=output:4
+priority=10,dl_type=0x0800,in_port=1,nw_proto=17,nw_src=192.168.56.102,nw_dst=192.168.56.101,actions=output:4
