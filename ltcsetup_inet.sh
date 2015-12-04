@@ -88,7 +88,7 @@ create()
 delete()
 {
     delete_port $OVS_TC "${VETH}1"
-    delete_link "${VETH}1"
+    delete_link $VETH
     delete_port $OVS_TC $INTERNET_IFACE
 
     delete_ovs $OVS_TC

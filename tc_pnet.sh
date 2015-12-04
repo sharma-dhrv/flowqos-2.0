@@ -3,15 +3,15 @@
 
 IFACE="veth1"
 
-VIDEO_CLASSIFIER="-p tcp --sport 80 -s 10.0.0.102 -j MARK --set-mark 0x4"
+VIDEO_CLASSIFIER="-i eth1 -p udp --dport 41995 -j MARK --set-mark 4"
 #VOIP_CLASSIFIER="-p tcp --dport 5001 -s 10.0.0.102 -j MARK --set-mark 0x5"
-GAME_CLASSIFIER="-p tcp --dport 5001 -s 10.0.0.102 -j MARK --set-mark 0x6"
+GAME_CLASSIFIER="-i eth1 -p tcp --sport 80 -j MARK --set-mark 6"
 #WEB_CLASSIFIER="-p tcp --sport 22 -s 10.0.0.102 -j MARK --set-mark 0x7"
 
 MAX_RATE="10mbit"
 VIDEO_RATE="5mbit"
 #VOIP_RATE="10mbit"
-GAME_RATE="5mbit"
+GAME_RATE="10mbit"
 #WEB_RATE="0mbit"
 
 
@@ -37,9 +37,9 @@ create_qdisc()
     tc qdisc add dev $IFACE root handle 1: htb default 6
 
     tc class add dev $IFACE parent 1: classid 1:1 htb rate $MAX_RATE ceil $MAX_RATE prio 100
-    tc class add dev $IFACE parent 1:1 classid 1:4 htb rate $VIDEO_RATE ceil $MAX_RATE prio 100 
+    tc class add dev $IFACE parent 1:1 classid 1:4 htb rate $VIDEO_RATE ceil $MAX_RATE prio 10
     #tc class add dev $IFACE parent 1:1 classid 1:5 htb rate $VOIP_RATE ceil $MAX_RATE prio 100
-    tc class add dev $IFACE parent 1:1 classid 1:6 htb rate $GAME_RATE ceil $MAX_RATE prio 100 
+    tc class add dev $IFACE parent 1:1 classid 1:6 htb rate $GAME_RATE ceil $MAX_RATE prio 20 
     #tc class add dev $IFACE parent 1:1 classid 1:7 htb rate $WEB_RATE ceil $MAX_RATE prio 100 
 }
 
@@ -51,10 +51,10 @@ delete_qdisc()
 create_iptables()
 {
 
-    iptables -t mangle -D OUTPUT -o $IFACE $VIDEO_CLASSIFIER
-    #iptables -t mangle -D OUTPUT -o $IFACE $VOIP_CLASSIFIER
-    iptables -t mangle -D OUTPUT -o $IFACE $VIDEO_CLASSIFIER
-    #iptables -t mangle -D OUTPUT -o $IFACE $WEB_CLASSIFIER
+    iptables -t mangle -A PREROUTING $VIDEO_CLASSIFIER
+    #iptables -t mangle -A OUTPUT -o $IFACE $VOIP_CLASSIFIER
+    iptables -t mangle -A PREROUTING $GAME_CLASSIFIER
+    #iptables -t mangle -A OUTPUT -o $IFACE $WEB_CLASSIFIER
     
     #This is filtering the iperf, because of the ports.
     #iptables -t mangle -A OUTPUT -o $IFACE -p tcp --dport 5001 -s 10.0.0.102 -j MARK --set-mark 0x6
@@ -77,19 +77,24 @@ create_iptables()
 
 delete_iptables()
 {
-    iptables -t mangle -D OUTPUT -o $IFACE $VIDEO_CLASSIFIER
+    iptables -t mangle -D PREROUTING $VIDEO_CLASSIFIER
     #iptables -t mangle -D OUTPUT -o $IFACE $VOIP_CLASSIFIER
-    iptables -t mangle -D OUTPUT -o $IFACE $VIDEO_CLASSIFIER
+    iptables -t mangle -D PREROUTING $GAME_CLASSIFIER
     #iptables -t mangle -D OUTPUT -o $IFACE $WEB_CLASSIFIER
 }
 
 
+create_prio2()
+{
+    tc filter add dev $IFACE protocol ip parent 1: prio 10 u32 match ip sport 80 0xffff flowid 1:6
+    tc filter add dev $IFACE protocol ip parent 1: prio 1 u32 match ip dport 41995 0xffff flowid 1:4
+}
 
 create_prio()
 {
-    tc filter add dev $IFACE protocol ip $VIDEO_PRIORITY
+    tc filter add dev $IFACE protocol ip parent 1:0 $VIDEO_PRIORITY
     #tc filter add dev $IFACE protocol ip $VOIP_PRIORITY
-    tc filter add dev $IFACE protocol ip $GAME_PRIORITY
+    tc filter add dev $IFACE protocol ip parent 1:0 $GAME_PRIORITY
     #tc filter add dev $IFACE protocol ip $WEB_PRIORITY
     
     #Adding filter for iperf: High (low in tc) priority
@@ -108,13 +113,13 @@ create_prio()
 create()
 {
     create_qdisc
-    create_iptables
-    create_prio
+    #create_iptables
+    create_prio2
 }
 
 delete()
 {
-    delete_iptables
+    #delete_iptables
     delete_qdisc
 }
 

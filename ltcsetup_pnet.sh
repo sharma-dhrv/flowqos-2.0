@@ -3,7 +3,7 @@
 
 OVS_TC="ovs-tc"
 VETH="veth"
-INTERNET_IFACE="eth1"
+INTERNET_IFACE="eth0"
 
 
 if [ ! $EUID -eq 0 ]; then
@@ -88,7 +88,7 @@ create()
 delete()
 {
     delete_port $OVS_TC "${VETH}1"
-    delete_link "${VETH}1"
+    delete_link $VETH
     delete_port $OVS_TC $INTERNET_IFACE
 
     delete_ovs $OVS_TC
