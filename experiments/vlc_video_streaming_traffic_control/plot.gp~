@@ -1,0 +1,23 @@
+#!/usr/bin/gnuplot
+
+set terminal pdf color enhanced font "Helvetica,12"
+
+
+set output "plot.pdf"
+
+set yrange [0.01:1e+10]
+set xrange [1:131072]
+
+set ytics nomirror
+set xtics nomirror
+
+set title "Long Multiplication vs Karatsuba Multiplication Runtime Analysis"
+
+set logscale x 2
+set logscale y 1000
+set xlabel 'Input Size (n)'
+set ylabel 'Runtime (usecs)'
+set key left vertical
+
+plot "case1.dat" using 1:($2/1000.0) title 'Video (RTP) + Background Traffic (Iperf TCP) with Flow Classification' with linespoints lt rgb "red" lw 2 pt 7, \
+      "case2.dat" using 1:($2/1000.0) title 'Video (RTP) + Background Traffic (Iperf TCP) without Flow Classification'   with linespoints lt rgb "blue" lw 2 pt 9
