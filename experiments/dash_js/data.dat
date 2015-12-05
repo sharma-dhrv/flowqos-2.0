@@ -1,0 +1,3 @@
+#Rate Limiting          Mean_Latency_1          Stdev_Latency_1          Mean_Latency_2         Stdev_Latency_2          Mean_Latency_3         Stdev_Latency_3
+"OVS Policing"          0.2101515152            0.1609312977             0.1685454545           0.08199050666            0.09275757576          0.05990909091
+"LTC Traffic Shaping"   0.8756363636            0.04662068893            0.139                  0.06137334519            0.07979623672          0.03802167444
