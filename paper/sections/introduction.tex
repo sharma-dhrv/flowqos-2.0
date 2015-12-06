@@ -1,0 +1,16 @@
+\section{Introduction}
+\label{sec:introduction}
+
+With majority of the world's data and computation handled by cloud-based
+systems, cloud management stacks (CMSes), such as Apache's
+CloudStack~\cite{cloudstack}, VMware's vSphere~\cite{vsphere} and
+OpenStack~\cite{os}, have become an increasingly important component in the cloud
+software. These CMSes are complex, large scale distributed systems enabling
+orchestration of tasks, including virtual machine (VM) spawning, termination,
+migration, etc. However, like every other distributed system, these CMSes are
+susceptible to a variety of complex faults, most of which are often hard to
+diagnose even for skilled developers/operators. For example, several
+faults~\cite{rackspace-1, rackspace-2, rackspace-3} in Rackspace's cloud
+offering based atop OpenStack took several hours or even days to resolve. In this
+paper, we focus on the problem of automatically determining the cause of such
+hard to diagnose faults manifesting in OpenStack operations.

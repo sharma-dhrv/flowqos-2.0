@@ -1,0 +1,136 @@
+%------------------------------------------------------------------------------
+%                        Paper document class & title
+%------------------------------------------------------------------------------
+
+
+\RequirePackage{fix-cm}
+%\documentclass[10pt]{sig-alternate-05-2015}
+\documentclass[10pt, conference, letterpaper]{IEEEtran}
+
+\def\flowqos{\textsc{FlowQoS}\xspace}
+\def\papertitle{{\fontsize{20.74}{12}\bf\scshape \flowqos}: Not Every Flow is Born
+the Same}
+\def\pdfauthors{}
+\def\paperkeywords{}
+
+
+%------------------------------------------------------------------------------
+%                                Pre-package misc.
+%------------------------------------------------------------------------------
+
+\usepackage{xcolor}
+
+% Link colors
+\definecolor{linkcol}{rgb}{0,0,1}
+\definecolor{citecol}{rgb}{0,0.5,0}
+\definecolor{urlcol}{rgb}{0.3,0,0}
+
+% Set PDF is paper dimensions to be Letter size.
+\setlength{\pdfpagewidth}{8.5in}
+\setlength{\pdfpageheight}{11in}
+
+
+%------------------------------------------------------------------------------
+%                                Use packages.
+%------------------------------------------------------------------------------
+
+\usepackage[normalem]{ulem}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{ragged2e}
+\usepackage{cite}
+\usepackage{txfonts}
+\usepackage{fancyhdr}
+\usepackage{amssymb}
+\usepackage{fancyvrb}
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage{pifont}
+\usepackage{url}
+\usepackage{xspace}
+\usepackage{epstopdf}
+
+\usepackage[aboveskip=5pt,small,labelfont=bf]{caption}
+\usepackage{subcaption}
+
+\usepackage[bookmarks=true,%
+bookmarksnumbered=true,%
+colorlinks=true,%
+linkcolor=linkcol,%
+citecolor=citecol,%
+urlcolor=urlcol,%
+hypertexnames=true,%
+pdfpagelabels]{hyperref}
+
+\usepackage{multirow}
+
+
+%------------------------------------------------------------------------------
+%                                Space savers.
+%------------------------------------------------------------------------------
+
+\setlength\floatsep{5pt}
+\setlength\textfloatsep{10pt}
+\setlength\intextsep{5pt}
+
+\makeatletter
+\def\url@myurlstyle{%
+   \@ifundefined{selectfont}{\def\UrlFont{\small}}{\def\UrlFont{\small}}}
+   \makeatother
+\urlstyle{myurl}
+
+
+%------------------------------------------------------------------------------
+%                                Misc.
+%------------------------------------------------------------------------------
+
+% This adds ':' to the characters after which not to break URLs, and
+% defines a smaller typewriter font. --cpk
+% changed small to sf -- md
+\def\UrlNoBreaks{\do:\do\(\do\[\do\{\do\<}%
+\def\UrlFont{\small\ttfamily}
+\def\UrlOrds{\do\*\do\~}%
+
+% For referencing sections, Vern-style
+\newcommand\xref[1]{\S~\ref{#1}}
+
+\newcommand\fref[1]{Fig.~\ref{#1}}
+
+
+%------------------------------------------------------------------------------
+%                                New commands
+%------------------------------------------------------------------------------
+
+% For notes to other authors:
+\newcommand{\note}[1]{{\textcolor{red}{\textit{#1}}}}
+\newcommand{\ignore}[1]{{\textcolor{red}{\sout{\textit{#1}}}}}
+
+
+\newcommand{\code}[1]{\texttt{\small{#1}}}
+\newcommand{\mycomment}[1]{}
+\newcommand{\todo}[1]{\textbf{TODO: #1}}
+\newcommand{\mytab}{~~~~}
+\newcommand{\sspace}{~}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\eg}{{e.g.,}}
+\newcommand{\ie}{{i.e.,}}
+\newcommand{\lno}[1]{{\tiny{\textbf{(#1)~~}}}}
+\newcommand{\toolx}[1]{{\fontsize{#1}{12}\bf\scshape \tool}}
+
+\newcommand{\of}{OpenFlow}
+\newcommand{\rulesep}{\unskip\ \vrule\ }
+\newcommand{\sdn}{{SDN}}
+\newcommand{\ltc}{{Linux Traffic Control}}
+\newcommand{\ovs}{{OpenvSwitch}}
+\newcommand{\htb}{{HTB}}
+
+\renewcommand{\thetable}{\arabic{table}}
+
+% \newcommand*{\refname}{Bibliography}
+
+\hypersetup{
+pdfauthor = {},
+pdftitle = {\papertitle},
+pdfkeywords = {\paperkeywords},
+pdfcreator = {LaTeX with hyperref package},
+pdfproducer = {pdflatex}}
