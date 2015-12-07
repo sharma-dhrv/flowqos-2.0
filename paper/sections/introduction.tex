@@ -1,16 +1,23 @@
 \section{Introduction}
 \label{sec:introduction}
 
-With majority of the world's data and computation handled by cloud-based
-systems, cloud management stacks (CMSes), such as Apache's
-CloudStack~\cite{cloudstack}, VMware's vSphere~\cite{vsphere} and
-OpenStack~\cite{os}, have become an increasingly important component in the cloud
-software. These CMSes are complex, large scale distributed systems enabling
-orchestration of tasks, including virtual machine (VM) spawning, termination,
-migration, etc. However, like every other distributed system, these CMSes are
-susceptible to a variety of complex faults, most of which are often hard to
-diagnose even for skilled developers/operators. For example, several
-faults~\cite{rackspace-1, rackspace-2, rackspace-3} in Rackspace's cloud
-offering based atop OpenStack took several hours or even days to resolve. In this
-paper, we focus on the problem of automatically determining the cause of such
-hard to diagnose faults manifesting in OpenStack operations.
+%why we need FlowQos?
+In modern times, user devices connected to broadband access networks, run an assortment of applications that exchange network traffic with remote servers and other devices over the internet. Since the upstream and downstream throughput may be limited at most time, those traffics will compete for relatively scarce bandwidth resources. 
+
+However, traffic from one application might not share the same characteristics as the traffic emerging from another application. To a large extent, it is the end-user’s requirements that play a significant role in deciding the nature of such applications and hence the kind of network traffic they send and receive. For instance, a user’s expectation from a VoIP call, video streaming and gaming applications is that their experience remains seamless and high quality during their use of the application, requiring the traffic to be sent out at near constant rates along low delay and low loss paths over the network. Whereas, in certain use cases such as data backup to the cloud and system updates, it is expected that the operation is completed eventually even when the user is not actively using the application. Traffic from such applications, in contrast to VoIP and video streaming, does not come with any hard deadlines or network requirements.
+
+While the nature of traffic varies so widely, the network devices today are, to a large extent, agnostic to such subtleties in the nature of network traffic and tend to handle it in the same way. Even though later kind of applications discussed above do not face any issues that directly affect the user, the former kind might be impacted severely due to the effect on network dynamics leaving the user with a sour experience. 
+
+%previous work
+Research over past many years has resulted in the use of various metrics such as packet delays, jitter, available bandwidth, frame rate etc. to quantify user’s experience in some way. One possible way to deal limited throughput is to configure the network routers to prioritize some specific applications' traffic flows (e.g. video, VoIP etc) over others (e.g. data backup, file upload etc). It will effectively improve Quality of Service (QoS). However, for some reasons, previous work on QoS mechanisms have not been deployed in broadband access networks~\cite{Seddiki2014}. The emergence of software-defined networking (SDN) gives more possiblities to solve this problem. One approach to deploying QoS in broadband access networks is to utilize the advantages of SDN that separates the network's control logic and forwarding planes. We can migrate the functions that perform QoS both application identification and router-level configuration to separate control logic, and design a front-end client (e.g., webpage) at high levels of abstraction to let users to assign bandwidth to each identified application according to their own preferrence. Once users set up their preference, the front-end will install the QoS configuration into the home routers~\cite{Seddiki2014}. This approach makes it easy for user to configure priorities and facilitates more sophisticated per-flow application based QoS. 
+
+%Our solution
+In this paper, we focus on FlowQoS~\cite{Seddiki2014} solution that utilizes SDN and traffic policing in virtual switches to achieve network isolation in traffic flow types. We further provide an alternate implementation using Linux traffic control features to achieve the same goal with possible optimization in the use of available bandwidth.
+
+%Our contribution
+Our contributions. First, we deploy the FlowQoS implementation of pair of virtual switches for improving QoS, within a virtual machine (emulating our end-host) with internet connection instead of the discussed hardware implementation. Second, we validate the results presented by FlowQoS~\cite{Seddiki2014} using similar tools and scenarios that they use. Finally, we intend to develop an SDN controller and agent application that utilizes Linux’s advanced routing and traffic control to implement the idea of FlowQoS while overcoming the limitation of under-utilization of available bandwidth. 
+
+%The rest of the paper
+Paper outline. The rest of the paper is organized in the following way. We discussed related work in QoS, as well as SDN-based solutions for home and broadband access networks in section \rom{2}. The motivation of FlowQos is presented in Section \rom{3}. Section \rom{4} records some problems we encountered. Section \rom{5} describes the design of FlowQoS and Section \rom{6} describes its implementation. Section \rom{7} evaluates FlowQoS for video streaming and VoIP applications in the context of competing flows. We discusses future work and open research avenues in Section \rom{8} and concludes in Section \rom{9}.
+
+

@@ -1,2 +1,23 @@
 \section{Related Works}
 \label{sec:related-works}
+
+% previous work for QoS
+There is significant previous work for QoS in IP networks~\cite{aurrecoechea1998survey, mcdysan1999qos, newman1996ipsilon}, traffic shapers, and traffic flows classifiers~\cite{roughan2004class}. However, most previous approaches are different with FlowQoS either focusing on different issues or working in different scenarios. FlowQoS focuses in particular on making per-flow, application-based QoS, which is designed to deploy and configure in home networks. 
+
+Kim et al. provides a solution~\cite{kim2010automated}, which sets rate limiters at the edge switches and priority queues for flow at each path hop. It uses a QoS control framework to manage automatically OpenFlow networks with multiple switches. On the contrary, FlowQoS provides similar automated trafiic shaping at a single gateway. Ishimori et al. developed QoSFlow~\cite{ishimori2012automatic}. It is a system that provides QoS in OpenFlow networks. QoSFlow shares similar shaping mechanism with FlowQoS. However, it does not focus on providing usable QoS for broadband access networks and is still under development. 
+Ko et al. proposed a two-tier flow-based QoS management framework~\cite{nam2013openqflow}, which needs multicore processors and is not designed for home networks like FlowQoS. Ferguson et al. developed PANE, a system that allows a user to reserve guaranteed minimum bandwidth between two hosts~\cite{ferguson2013participatory}. PANE addresses on more issues than FlowQos, which makes it do not focuse on QoS in broadband access networks or application identification. Williams et al.~\cite{williams2011real} developed an automated IP traffic classification algorithm based on statistical flow properties. This approach limited the throughout of commodity home routers
+to 28 Mbps. In contrast, FlowQoS faces no such limitations.\\
+
+
+
+%SDN-based solutions for home and broadband access networks
+
+The emergence of SDN provides more possible solutions for QoS. A lot previous work is based on SDN. Risso et al.~\cite{risso2012customizing} developed an OpenFlow-based mechanism
+for customizing data-plane processing in home routers, but
+the architecture is focused on more general data-plane modifications, not QoS. Georgopoulos et al.~\cite{georgopoulos2013towards} proposed an OpenFlow-assisted framework that improves users’ quality of experience (QoE) in home networks for multimedia flows. However, it performs per-device QoS. Mortier et al.~\cite{mortier2011supporting} developed Homework and Carbone et al.~\cite{carbone2010dummynet} developed a port of Dummynet for OpenWrt. Both of them do not perform any application classification. 
+
+%Previous work on HTB
+
+
+
+
