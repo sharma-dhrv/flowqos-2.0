@@ -1,3 +1,16 @@
-\section{Discussion}
+\section{Discussion \& Future Work}
 \label{sec:discussion}
+Through our experiments, we observed that the FlowQoS architecture in either case helps in increasing the overall bitrate for VLC-based RTP video streaming, reduces overall jitter for Skype video calls and reduces the overall segment latencies in comparison to the scenario where both of must compete for their share of bandwidths.
+Moreover, we observed that our alternate implementation of the FlowQoS architecture using HTB queuing routine certainly improves bitrate for video traffic when it competes with a simultaneous TCP traffic, reduces latencies for DASH-JS segment delivery and provides a much more efficient utilization of available bandwidth by a lower priority traffic in case a higher priority traffic is not consuming it's share of bandwidth.
 
+We have shown that classifying and separating flows is an effective way to make sure congestion doesn't ruin performance requirements for applications that are more affected by longer latencies.
+
+One major concern seen by our results is the case where flows shared the same queue as the TCP traffic. In the Dash-JS experiment we saw that the HTB shows significantly higher latencies when flow remain unclassified and share the same link when compared to the OVS policing case. We defer it for a future investigation of this discrepancy and answer whether (or not) the additional overhead introduced by it could significantly affect its scalability compared to the OVS-based solution.
+
+In the future, we would like to exploit the NetFlow support provided in OpenvSwitch for realtime monitoring, analytics and dynamic rate control for various traffic types using a local end-host agent. This can help in efficiently utilizing the available bandwidth in OVS-based solution itself similar to the HTB-based solution.
+
+Moreover, the current solution does not consider equal bandwidth share among flows within each traffic type and this remains an open problem for us. We intend to explore the Stochastic Fair Queuing (SFQ) discipline in Linux's traffic control suite to enforce this constraint.
+
+Also, we aim to experiment with other protocol identification tools libraries that use more sophiticated classification techniques and achieve higher accuracy in identification of protocols compared to \texttt{libprotoident}.
+
+%Currently each traffic for each flow has to be thought out and categorized manually in order to work. It would be interesting if flows could be categorized by how they consume bandwidth (TCP vs. UDP), and given a priority level to determine how aggressively flow classifiers should throttle or allocate bandwidth.  In the case of UDP-like flows, there would be less concern about flows continuously dominating bandwidth to the point of causing throughput to fluctuate.\\

@@ -44,11 +44,13 @@ the Same}
 \usepackage{amssymb}
 \usepackage{fancyvrb}
 \usepackage{graphicx}
+\graphicspath{ {images/} }
 \usepackage{times}
 \usepackage{pifont}
 \usepackage{url}
 \usepackage{xspace}
 \usepackage{epstopdf}
+\usepackage{dirtytalk}
 
 \usepackage[aboveskip=5pt,small,labelfont=bf]{caption}
 \usepackage{subcaption}
@@ -134,3 +136,68 @@ pdftitle = {\papertitle},
 pdfkeywords = {\paperkeywords},
 pdfcreator = {LaTeX with hyperref package},
 pdfproducer = {pdflatex}}
+
+\begin{document}
+ 
+\title{\papertitle}
+
+
+\author{\IEEEauthorblockN{Dhruv Sharma}
+\IEEEauthorblockA{UC San Diego, CA\\
+dhsharma@cs.ucsd.edu}
+\and
+\IEEEauthorblockN{Robert Jenkins}
+\IEEEauthorblockA{UC San Diego, CA\\
+rfjenkins@ucsd.edu}
+\and
+\IEEEauthorblockN{Frederik Nygaard}
+\IEEEauthorblockA{UC San Diego, CA\\
+frederikny@gmail.com}
+\and
+\IEEEauthorblockN{Feichao Qian}
+\IEEEauthorblockA{UC San Diego, CA\\
+feqian@ucsd.edu}}
+
+
+\maketitle
+
+\begin{abstract}
+In modern times, user devices connected to broadband access networks, run an assortment of applications that exchange network traffic with remote servers and other devices over the Internet. However, in the absence of any differentiated treatment by the network devices, traffic from certain delay and loss-sensitive applications suffers badly leading to performance degradation for such applications. In this paper, we validated the classification and traffic isolation technique proposed by the original FlowQoS paper and conclude that it certainly improves the bitrates as well as reduces packet jitter and latencies for certain video streaming applications that provide the end-user with a much better experience. Also, we propose and evaluate an alternate architecture for FlowQoS using Linux traffic control disciplines and evaluate it demonstrate the additional benefits that can be gained by adopting such approach.
+\end{abstract}
+
+\input{sections/introduction.tex}
+\input{sections/relatedwork.tex}
+\input{sections/implementation.tex}
+\input{sections/motivation.tex}
+% \input{sections/goals.tex}
+%\input{sections/problem.tex}
+\input{sections/design.tex}
+\input{sections/evaluation.tex}
+\input{sections/discussion.tex}
+\input{sections/conclusion.tex}
+
+\raggedright
+\small
+\bibliographystyle{abbrv}
+\bibliography{paper}
+%example bibliography
+%\begin{thebibliography}{9}
+%\bibitem{latexcompanion} 
+%Michel Goossens, Frank Mittelbach, and Alexander Samarin. 
+%\textit{The \LaTeX\ Companion}. 
+%Addison-Wesley, Reading, Massachusetts, 1993.
+ 
+%\bibitem{einstein} 
+%Albert Einstein. 
+%\textit{Zur Elektrodynamik bewegter K{\"o}rper}. (German) 
+%[\textit{On the electrodynamics of moving bodies}]. 
+%Annalen der Physik, 322(10):891–921, 1905.
+ 
+%\bibitem{knuthwebsite} 
+%Knuth: Computers and Typesetting,
+%\\\texttt{http://www-cs-faculty.stanford.edu/\~{}uno/abcde.html}
+%\end{thebibliography}
+
+
+ 
+\end{document}
